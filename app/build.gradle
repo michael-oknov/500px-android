@@ -32,13 +32,12 @@ dependencies {
   compile 'com.android.support:appcompat-v7:23.3.0'
   compile 'com.fivehundredpx:greedo-layout:1.0.0'
   compile 'com.android.support:design:23.3.0'
+  compile 'com.squareup.picasso:picasso:2.5.2'
+
+  retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.0.6'
 
   //Butter Knife
   compile 'com.jakewharton:butterknife:7.0.1'
-  compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
-    transitive = true;
-  }
-  retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.0.6'
   //Retrofit
   compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
   compile 'com.squareup.retrofit2:converter-moshi:2.0.0-beta4'
@@ -56,5 +55,4 @@ dependencies {
     exclude group: 'android.support'
     exclude group: 'com.squareup.dagger'
   }
-
 }
