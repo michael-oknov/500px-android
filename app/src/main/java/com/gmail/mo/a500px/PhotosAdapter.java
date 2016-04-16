@@ -74,6 +74,15 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewH
     notifyDataSetChanged();
   }
 
+  public void addAll(List<Photo> photos){
+    int startPosition = this.photos.size();
+    this.photos.addAll(photos);
+    mImageAspectRatios = new double[this.photos.size()];
+
+    calculateImageAspectRatios();
+    notifyItemRangeInserted(startPosition, photos.size());
+  }
+
   @Override
   public void onBindViewHolder(PhotoViewHolder holder, int position) {
     Picasso.with(mContext)
