@@ -15,6 +15,7 @@ public class DataManager {
   private final CompositeSubscription subscriptions = new CompositeSubscription();
   private final RestService restService;
   private int mPage = 1;
+  private boolean isDownloading;
   private List<Photo> photos = new ArrayList<>();
 
   public DataManager(RestService restService) {
@@ -23,15 +24,19 @@ public class DataManager {
   }
 
   private void updatePhotos(List<Photo> newPhotos) {
+    isDownloading = false;
     this.photos.addAll(newPhotos);
     subject.onNext(newPhotos);
   }
 
   private void download() {
+    isDownloading = true;
     subscriptions.add(restService.getPhotos(mPage)
+        .doOnError(Throwable::printStackTrace)
+        .retry()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
-        .subscribe(answer -> updatePhotos(answer.getPhotos()), Throwable::printStackTrace));
+        .subscribe(answer -> updatePhotos(answer.getPhotos())));
   }
 
   public void loadMore() {
@@ -44,8 +49,12 @@ public class DataManager {
   }
 
   public Photo getPhoto(int position) {
-    if (position > photos.size() - 3) loadMore();
-    return photos.get(position);
+    try {
+      if (position > photos.size() - 3 && !isDownloading) loadMore();
+      return photos.get(position);
+    } catch (IndexOutOfBoundsException e) {
+      return null;
+    }
   }
 
   public Observable<List<Photo>> subscribeNewChanges() {
