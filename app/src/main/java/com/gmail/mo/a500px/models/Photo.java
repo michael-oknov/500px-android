@@ -17,6 +17,7 @@ public class Photo {
   @SerializedName("comments_count") private int commentsCount;
   private boolean nsfw;
   @SerializedName("image_url") private String imageUrl;
+  @SerializedName("camera") private String cameraName;
   private User user;
 
   public String getName() {
@@ -33,5 +34,13 @@ public class Photo {
 
   public int getHeight() {
     return height;
+  }
+
+  public String getCameraName() {
+    return cameraName;
+  }
+
+  public User getUser() {
+    return user;
   }
 }

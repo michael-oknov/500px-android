@@ -12,4 +12,8 @@ public class User {
   private String fullname;
   @SerializedName("userpic_url") private String userpicUrl;
   @SerializedName("upgrade_status") private int upgradeStatus;
+
+  public String getFullname() {
+    return fullname;
+  }
 }

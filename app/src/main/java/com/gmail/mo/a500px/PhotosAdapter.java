@@ -7,17 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.fivehundredpx.greedolayout.GreedoLayoutSizeCalculator;
 import com.gmail.mo.a500px.models.Photo;
+import com.gmail.mo.a500px.ui.DetailsActivity;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewHolder> implements
-    GreedoLayoutSizeCalculator.SizeCalculatorDelegate {
+public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewHolder>
+    implements GreedoLayoutSizeCalculator.SizeCalculatorDelegate {
 
   List<Photo> photos = new ArrayList<>();
   private double[] mImageAspectRatios = new double[0];
 
   private Context mContext;
+
+  public PhotosAdapter(Context context) {
+    mContext = context;
+  }
 
   @Override
   public double aspectRatioForIndex(int index) {
@@ -25,47 +30,17 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewH
     return mImageAspectRatios[getLoopedIndex(index)];
   }
 
-  public class PhotoViewHolder extends RecyclerView.ViewHolder {
-    private ImageView mImageView;
-    public PhotoViewHolder(ImageView imageView) {
-      super(imageView);
-      mImageView = imageView;
-      itemView.setOnClickListener(v->{
-        Photo photo = photos.get(getAdapterPosition());
-        Intent intent = new Intent(mContext, DetailsActivity.class);
-        int[] screenLocation = new int[2];
-        imageView.getLocationOnScreen(screenLocation);
-
-        //Pass the image title and url to DetailsActivity
-        intent.putExtra("left", screenLocation[0]).
-            putExtra("top", screenLocation[1]).
-            putExtra("width", imageView.getWidth()).
-            putExtra("height", imageView.getHeight()).
-            putExtra("title", photo.getName()).
-            putExtra("image", photo.getImageUrl());
-
-        mContext.startActivity(intent);
-      });
-    }
-  }
-
-  public PhotosAdapter(Context context) {
-    mContext = context;
-  }
-
   @Override
   public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     ImageView imageView = new ImageView(mContext);
     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-    imageView.setLayoutParams(new ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.MATCH_PARENT
-    ));
+    imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.MATCH_PARENT));
     return new PhotoViewHolder(imageView);
   }
 
-  public void setDataset(List<Photo> photos){
+  public void setDataset(List<Photo> photos) {
     this.photos.clear();
     this.photos.addAll(photos);
     mImageAspectRatios = new double[this.photos.size()];
@@ -74,7 +49,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewH
     notifyDataSetChanged();
   }
 
-  public void addAll(List<Photo> photos){
+  public void addAll(List<Photo> photos) {
     int startPosition = this.photos.size();
     this.photos.addAll(photos);
     mImageAspectRatios = new double[this.photos.size()];
@@ -105,5 +80,27 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewH
   // Index gets wrapped around <code>Constants.IMAGES.length</code> so we can loop content.
   private int getLoopedIndex(int index) {
     return index % photos.size(); // wrap around
+  }
+
+  public class PhotoViewHolder extends RecyclerView.ViewHolder {
+    private ImageView mImageView;
+
+    public PhotoViewHolder(ImageView imageView) {
+      super(imageView);
+      mImageView = imageView;
+      itemView.setOnClickListener(v -> {
+        Intent intent = new Intent(mContext, DetailsActivity.class);
+        int[] screenLocation = new int[2];
+        imageView.getLocationOnScreen(screenLocation);
+
+        intent.putExtra("left", screenLocation[0]).
+            putExtra("top", screenLocation[1]).
+            putExtra("width", imageView.getWidth()).
+            putExtra("height", imageView.getHeight()).
+            putExtra("position", getAdapterPosition());
+
+        mContext.startActivity(intent);
+      });
+    }
   }
 }

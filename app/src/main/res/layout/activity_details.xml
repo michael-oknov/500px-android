@@ -2,24 +2,22 @@
 <FrameLayout
   android:id="@+id/main_background"
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="#000"
-  android:orientation="vertical">
+  android:background="#000">
 
-  <ImageView
-    android:id="@+id/grid_item_image"
+  <com.gmail.mo.a500px.ui.HackyViewPager
+    android:id="@+id/viewPager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:scaleType="fitCenter" />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-  <TextView
-    android:id="@+id/title"
-    android:layout_width="match_parent"
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/fab"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:padding="10dp"
-    android:textColor="#fff"
-    android:textSize="20dp" />
+    android:layout_gravity="end|bottom"
+    android:layout_margin="@dimen/widget_gap"
+    android:src="@android:drawable/ic_menu_share" />
 </FrameLayout>

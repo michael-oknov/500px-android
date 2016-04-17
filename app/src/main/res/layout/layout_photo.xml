@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#000"
+  android:orientation="vertical">
+
+  <uk.co.senab.photoview.PhotoView
+    android:id="@+id/photo_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+  <TextView
+    android:id="@+id/photo_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft="@dimen/widget_gap"
+    android:layout_marginTop="@dimen/widget_gap_small"
+    android:textColor="@color/text_white"
+    tools:text="Waterfall" />
+
+  <TextView
+    android:id="@+id/author_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@id/photo_title"
+    android:layout_marginLeft="@dimen/widget_gap"
+    android:layout_marginTop="@dimen/widget_gap_small"
+    android:textColor="@color/text_white"
+    tools:text="Michael" />
+
+  <TextView
+    android:id="@+id/camera_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@id/author_title"
+    android:layout_marginLeft="@dimen/widget_gap"
+    android:layout_marginTop="@dimen/widget_gap_small"
+    android:textColor="@color/text_white"
+    tools:text="Canon" />
+</RelativeLayout>
