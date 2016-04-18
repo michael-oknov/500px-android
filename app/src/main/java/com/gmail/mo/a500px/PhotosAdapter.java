@@ -77,9 +77,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewH
     }
   }
 
-  // Index gets wrapped around <code>Constants.IMAGES.length</code> so we can loop content.
   private int getLoopedIndex(int index) {
-    return index % photos.size(); // wrap around
+    return index % photos.size();
   }
 
   public class PhotoViewHolder extends RecyclerView.ViewHolder {

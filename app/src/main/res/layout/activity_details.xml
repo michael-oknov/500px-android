@@ -8,10 +8,11 @@
   android:background="#000">
 
   <com.gmail.mo.a500px.ui.HackyViewPager
-    android:id="@+id/viewPager"
+    android:id="@+id/view_pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
   <android.support.design.widget.FloatingActionButton
     android:id="@+id/fab"

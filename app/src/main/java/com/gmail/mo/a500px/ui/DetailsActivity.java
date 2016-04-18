@@ -15,7 +15,6 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.OnClick;
 import com.gmail.mo.a500px.DataManager;
@@ -26,12 +25,11 @@ import javax.inject.Inject;
 public class DetailsActivity extends BaseActivity {
   private static final int ANIM_DURATION = 600;
   @Inject DataManager mDataManager;
-  @Bind(R.id.viewPager) HackyViewPager viewPager;
+  @Bind(R.id.view_pager) HackyViewPager viewPager;
   private int mLeftDelta;
   private int mTopDelta;
   private float mWidthScale;
   private float mHeightScale;
-  private FrameLayout frameLayout;
   private ColorDrawable colorDrawable;
   private int thumbnailTop;
   private int thumbnailLeft;
@@ -42,11 +40,8 @@ public class DetailsActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    //Setting details screen layout
     setContentView(R.layout.activity_details);
 
-    //retrieves the thumbnail data
     Bundle bundle = getIntent().getExtras();
     thumbnailTop = bundle.getInt("top");
     thumbnailLeft = bundle.getInt("left");
@@ -54,13 +49,10 @@ public class DetailsActivity extends BaseActivity {
     thumbnailHeight = bundle.getInt("height");
     startPosition = bundle.getInt("position");
 
-    //Set the background color to black
-    frameLayout = (FrameLayout) findViewById(R.id.main_background);
+    FrameLayout frameLayout = (FrameLayout) findViewById(R.id.main_background);
     colorDrawable = new ColorDrawable(Color.BLACK);
     frameLayout.setBackground(colorDrawable);
 
-    // Only run the animation if we're coming from the parent activity, not if
-    // we're recreated automatically by the window manager (e.g., device rotation)
     viewPager.setAdapter(new SamplePagerAdapter());
     viewPager.setCurrentItem(startPosition);
     if (savedInstanceState == null) {
@@ -108,14 +100,11 @@ public class DetailsActivity extends BaseActivity {
     viewPager.setTranslationX(mLeftDelta);
     viewPager.setTranslationY(mTopDelta);
 
-    // interpolator where the rate of change starts out quickly and then decelerates.
     TimeInterpolator sDecelerator = new DecelerateInterpolator();
 
-    // Animate scale and translation to go from thumbnail to full size
     viewPager.animate().setDuration(ANIM_DURATION).scaleX(1).scaleY(1).
         translationX(0).translationY(0).setInterpolator(sDecelerator);
 
-    // Fade in the black background
     ObjectAnimator bgAnim = ObjectAnimator.ofInt(colorDrawable, "alpha", 0, 255);
     bgAnim.setDuration(ANIM_DURATION);
     bgAnim.start();
@@ -132,7 +121,6 @@ public class DetailsActivity extends BaseActivity {
         .setInterpolator(sInterpolator)
         .withEndAction(endAction);
 
-    // Fade out background
     ObjectAnimator bgAnim = ObjectAnimator.ofInt(colorDrawable, "alpha", 0);
     bgAnim.setDuration(ANIM_DURATION);
     bgAnim.start();
