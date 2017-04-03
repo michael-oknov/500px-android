@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 public class PhotoView extends RelativeLayout {
   private final Picasso picasso;
-  @Bind(R.id.photo_view) uk.co.senab.photoview.PhotoView imageView;
+  @Bind(R.id.photo_view) com.github.chrisbanes.photoview.PhotoView imageView;
   @Bind(R.id.author_title) TextView authorView;
   @Bind(R.id.camera_title) TextView cameraView;
   @Bind(R.id.photo_title) TextView nameView;
